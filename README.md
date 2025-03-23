@@ -1,3 +1,21 @@
-# violence_detection
-Nhận diện và cảnh báo hành vi bạo lực
-Phát hiện sự kiện bạo lực trong hệ thống giám sát đang đóng vai trò quan trọng trong việc thực thi pháp luật và an toàn thành phố. Hiệu quả của các máy phát hiện sự kiện bạo lực được đo bằng tốc độ phản ứng, độ chính xác và tính tổng quát trên các loại nguồn video khác nhau với định dạng khác nhau. Một số nghiên cứu đã tập trung vào phát hiện bạo lực, tập trung vào tốc độ hoặc độ chính xác hoặc cả hai nhưng không tính đến tính tổng quát trên các loại nguồn video khác nhau. Trong bài báo này, chúng tôi đề xuất một máy phát hiện bạo lực thời gian thực dựa trên các phương pháp học sâu. Mô hình đề xuất bao gồm CNN như một trình trích xuất đặc điểm không gian và LSTM như một phương pháp học quan hệ thời gian, tập trung vào ba yếu tố (tính tổng quát chung - độ chính xác - thời gian phản hồi nhanh). Mô hình đề xuất đạt độ chính xác 98% với tốc độ 131 khung hình/giây. So sánh độ chính xác và tốc độ của mô hình đề xuất với các công trình trước đây cho thấy mô hình đề xuất cung cấp độ chính xác cao nhất và tốc độ nhanh nhất trong số tất cả các công trình trước đây trong lĩnh vực phát hiện bạo lực.
+Hệ Thống Phát Hiện Bạo Lực Từ Video Streaming
+
+Giới Thiệu
+
+Hệ thống này sử dụng camera để phát hiện hành vi bạo lực trong thời gian thực bằng cách kết hợp các kỹ thuật nhận diện đối tượng, phân tích chuyển động và mô hình học sâu. Nếu phát hiện bạo lực, hệ thống sẽ kích hoạt cảnh báo và ghi lại sự kiện vào cơ sở dữ liệu MongoDB, đồng thời lưu video để xem lại sau này.
+
+Các Công Nghệ Sử Dụng
+
+OpenCV: Xử lý hình ảnh và video. TensorFlow/Keras: Sử dụng mô hình học sâu để phân tích hành vi. YOLOv8: Nhận diện đối tượng (người) trong video. MoveNet (TFLite): Nhận diện tư thế cơ thể. MongoDB: Lưu trữ dữ liệu các sự cố. Pygame: Phát âm thanh cảnh báo.
+
+Nguyên Lý Hoạt Động
+
+Lấy dữ liệu từ camera: Camera được kết nối qua IP từ điện thoại Android. Phát hiện người bằng YOLO: Hệ thống xác định vị trí con người trong khung hình. Nhận diện tư thế bằng MoveNet: Dự đoán vị trí các bộ phận cơ thể. Phân tích chuyển động: Đánh giá tốc độ, độ giật và tư thế bất thường. Phát hiện bạo lực: Sử dụng mô hình học sâu để xác định xem có hành vi bạo lực không. Cảnh báo & ghi hình: Nếu phát hiện bạo lực, hệ thống sẽ: Phát cảnh báo âm thanh. Ghi lại video sự cố trước và sau khi xảy ra. Lưu thông tin sự cố vào MongoDB. Người dùng có thể xem lại video đã ghi.
+
+Hướng Dẫn Cài Đặt Cài đặt các thư viện cần thiết: pip install opencv-python numpy torch tensorflow ultralytics pymongo pygame
+
+Chạy chương trình: python phat_hien_bao_luc.py
+
+Cấu Hình MongoDB Bạn cần thay đổi MONGODB_CONNECTION_STRING trong code để phù hợp với hệ thống của bạn.
+
+Lưu Ý Điện thoại và máy tính phải cùng mạng WiFi. Đảm bảo URL camera IP đúng (ví dụ: http://192.168.x.x:4747/video). Nếu phát hiện sai, có thể điều chỉnh ngưỡng violence_threshold trong cấu hình.
